@@ -4,13 +4,13 @@ import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
 public class TopicService  implements Service {
-    private ConcurrentHashMap<String,
+    private final ConcurrentHashMap<String,
             ConcurrentHashMap<String, ConcurrentLinkedQueue<String>>> queue
             = new ConcurrentHashMap<>();
 
     @Override
     public Resp process(Req req) {
-        Resp rsl = new Resp("", "204");
+        Resp rsl = new Resp(req.getParam(), "201");
         String reqType = req.httpRequestType();
         switch (reqType) {
             case "POST" -> queue.get(req.getSourceName()).values().forEach(v -> v.add(req.getParam()));

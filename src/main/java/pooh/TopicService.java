@@ -15,8 +15,9 @@ public class TopicService  implements Service {
         String reqType = req.httpRequestType();
         switch (reqType) {
             case "POST" -> {
-                if (queue.get(req.getSourceName()) != null) {
-                    queue.get(req.getSourceName()).values().forEach(v -> v.add(req.getParam()));
+                ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> topic = queue.get(req.getSourceName());
+                if (topic != null) {
+                    topic.values().forEach(v -> v.add(req.getParam()));
                 }
             }
             case "GET" -> {

@@ -3,7 +3,7 @@ package pooh;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentLinkedQueue;
 
-public class TopicService  implements Service {
+public class TopicService implements Service {
     private final ConcurrentHashMap<String,
             ConcurrentHashMap<String, ConcurrentLinkedQueue<String>>> queue
             = new ConcurrentHashMap<>();
@@ -22,8 +22,7 @@ public class TopicService  implements Service {
             }
             case "GET" -> {
                 queue.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
-                ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> map =
-                        queue.get(req.getSourceName());
+                ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> map = queue.get(req.getSourceName());
                 map.putIfAbsent(req.getParam(), new ConcurrentLinkedQueue<>());
                 String s = map.get(req.getParam()).poll();
                 if (s != null) {

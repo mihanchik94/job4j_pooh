@@ -22,9 +22,8 @@ public class TopicService implements Service {
             }
             case "GET" -> {
                 queue.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
-                ConcurrentHashMap<String, ConcurrentLinkedQueue<String>> map = queue.get(req.getSourceName());
-                map.putIfAbsent(req.getParam(), new ConcurrentLinkedQueue<>());
-                String s = map.get(req.getParam()).poll();
+                queue.get(req.getSourceName()).putIfAbsent(req.getParam(), new ConcurrentLinkedQueue<>());
+                String s = queue.get(req.getSourceName()).get(req.getParam()).poll();
                 if (s != null) {
                     rsl = new Resp(s, "200");
                 }

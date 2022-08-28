@@ -24,9 +24,7 @@ public class TopicService implements Service {
                 queue.putIfAbsent(req.getSourceName(), new ConcurrentHashMap<>());
                 queue.get(req.getSourceName()).putIfAbsent(req.getParam(), new ConcurrentLinkedQueue<>());
                 String s = queue.get(req.getSourceName()).get(req.getParam()).poll();
-                if (s != null) {
-                    rsl = new Resp(s, "200");
-                }
+                rsl = (s == null ? new Resp("", "204") : new Resp(s, "200"));
             }
             default -> new Resp("", "501");
         }

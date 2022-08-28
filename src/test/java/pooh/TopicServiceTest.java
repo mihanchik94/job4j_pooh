@@ -25,6 +25,6 @@ public class TopicServiceTest {
                 new Req("GET", "topic", "weather", paramForSubscriber2)
         );
         assertThat(result1.text(), is("temperature=18"));
-        assertThat(result2.text(), is("client6565"));
+        assertThat(result2.text(), is(""));
     }
 }
